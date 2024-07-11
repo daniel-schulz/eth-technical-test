@@ -1,0 +1,11 @@
+.cardselection-components-card {
+    background-color: orangered;
+    border-radius: 25px;
+    height: 200px;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+}
