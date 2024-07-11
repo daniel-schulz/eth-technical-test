@@ -19,9 +19,9 @@ export class GenericMetricController {
 
   @Post(":id")
   @ApiBody({})
-  async setMetricData(@Param('id') id: string, @Body() createUserDto: any) {
+  async setMetricData(@Param('id') id: string, @Body() metric: any) {
     try {
-      return await this.genericMetricService.create(id, createUserDto)
+      return await this.genericMetricService.create(id, metric)
     } catch (error) {
       // TODO: Implement proper error handling
       throw new HttpException(error.message, HttpStatus.CONFLICT);
