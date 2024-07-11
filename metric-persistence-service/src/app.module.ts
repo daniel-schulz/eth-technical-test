@@ -1,7 +1,10 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import {ConfigModule} from "@nestjs/config";
+import {ConfigModule } from "@nestjs/config";
+
+import { GenericMetricController } from './generic-metric.controller';
+import { GenericMetricService } from './generic-metric.service';
+import {DatabaseService} from "./database/database.service";
+import {DatabaseModule} from "./database/database.module";
 
 @Module({
   imports: [
@@ -9,8 +12,9 @@ import {ConfigModule} from "@nestjs/config";
       isGlobal: true,
       envFilePath: '.env',
     }),
+    DatabaseModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [GenericMetricController],
+  providers: [GenericMetricService],
 })
 export class AppModule {}

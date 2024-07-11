@@ -18,7 +18,7 @@ services:
       dockerfile: Dockerfile
     environment:
       - NODE_ENV=production
-      - MONGO_URL=mongodb://mongo:27017/metrics
+      - MONGO_URL=mongodb://mongo:27017/eth-metrics
     volumes:
       - ./metric-persistence-service:/app
     networks:
