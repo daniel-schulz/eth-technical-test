@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  web-ui:
+    build:
+      context: ./web-ui
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    networks:
+      - app-network
+    depends_on:
+      - metric-persistence-service
+
+  metric-persistence-service:
+    build:
+      context: ./metric-persistence-service
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=production
+      - MONGO_URL=mongodb://mongo:27017/metrics
+    volumes:
+      - ./metric-persistence-service:/app
+    networks:
+      - app-network
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:4.4
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - app-network
+
+networks:
+  app-network:
+
+volumes:
+  mongo_data:
