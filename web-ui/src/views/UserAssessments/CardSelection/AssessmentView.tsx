@@ -13,7 +13,7 @@ export function AssessmentView() {
 
   return (
     <div className="App">
-      <h1>Card Selection Test</h1>
+      <h1>Card Selection Assessment</h1>
       <div>
         {!isTestStarted && (<Introduction onTestStart={onTestStart}/>)}
         {isTestStarted && (<AssessmentRoundComponent/>)}
