@@ -21,13 +21,11 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
         })
         .catch((error) => {
           console.error('Failed to connect to MongoDB', error);
-          throw error; // Rethrow to stop application startup if connection fails
+          throw error;
         });
-      this.db = this.client.db();
-      console.log('Connected to MongoDB');
     } catch (error) {
       console.error('Failed to connect to MongoDB', error);
-      throw error; // Rethrow to stop application startup if connection fails
+      throw error;
     }
   }
 
@@ -37,8 +35,7 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
 
   getCollection(collectionName: string) {
     if (!this.db) {
-      const uri = this.configService.get<string>('MONGO_URL') || '';
-      throw new Error(`Database connection is not established to: ${uri}`);
+      throw new Error(`Database connection is not established`);
     }
     return this.db.collection(collectionName);
   }

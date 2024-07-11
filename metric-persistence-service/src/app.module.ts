@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common';
 import {ConfigModule } from "@nestjs/config";
 
-import { GenericMetricController } from './generic-metric.controller';
-import { GenericMetricService } from './generic-metric.service';
-import {DatabaseService} from "./database/database.service";
+import { GenericMetricController } from './generic-metric/generic-metric.controller';
+import { GenericMetricService } from './generic-metric/generic-metric.service';
 import {DatabaseModule} from "./database/database.module";
 
 @Module({
