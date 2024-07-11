@@ -8,6 +8,8 @@ export function AssessmentView() {
   const [isTestStarted, setIsTestStarted] = React.useState(false);
 
   function onTestStart(userIdentifier: string) {
+    // TODO: Implement assessment service
+    // TODO: check if test was already done with the userIdentifier!
     setIsTestStarted(true);
   }
 
