@@ -30,7 +30,6 @@ export class GenericMetricController {
     try {
       return await this.genericMetricService.create(assessmentId, userId, metric)
     } catch (error) {
-      // TODO: Implement proper error handling
       throw new HttpException(error.message, HttpStatus.CONFLICT);
     }
   }

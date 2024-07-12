@@ -1,11 +1,26 @@
-export const getRandomNumber = (): number => Math.floor(Math.random() * 9) + 1;
+/**
+ * Returns a random number between min and max.
+ * @param min The minimum number.
+ * @param max The maximum number.
+ * @returns A random number between min and max.
+ */
+export const getRandomNumber = (min: number, max: number): number => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
 
-export const getRandomLetters = (): string => {
+/**
+ * Returns a random string of letters.
+ * @param numberOfLetters The number of letters to return.
+ * @returns A random string of letters.
+ */
+export const getRandomLetters = (numberOfLetters: number): string => {
   const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-  const length = Math.floor(Math.random() * 4) + 1;
   let result = '';
-  for (let i = 0; i < length; i++) {
-    result += letters.charAt(Math.floor(Math.random() * letters.length));
+
+  for (let i = 0; i < numberOfLetters; i++) {
+    const randomIndex = getRandomNumber(0, letters.length - 1);
+    result += letters.charAt(randomIndex);
   }
+
   return result;
 };

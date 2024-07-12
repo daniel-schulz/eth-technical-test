@@ -21,9 +21,6 @@
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#about-the-project">About The Project</a>
-    </li>
-    <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
@@ -31,20 +28,10 @@
         <li><a href="#deinstallation">Deinstallation</a></li>
       </ul>
     </li>
-    <li><a href="#architecture-diagrams">Architecture Diagrams</a></li>
+    <li><a href="#system-architecture-overview">System Architecture Overview</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
   </ol>
 </details>
-
-
-
-<!-- ABOUT THE PROJECT -->
-
-## About The Project
-
-TODO: Write a project description
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
@@ -54,14 +41,15 @@ TODO: Write a project description
 
 ### Prerequisites
 
-* docker and docker-compose (see [docker documentation](https://docs.docker.com/compose/install/))
+To run deploy this application you need to have `docker` and `docker-compose` installed. For installation details see the [docker documentation](https://docs.docker.com/compose/install/).
 
 ### Installation
 
 Deploy the service to the docker environment:
 
    ```sh
-   docker compose up --build --detach
+docker compose up --build --detach
+
    ```
 
 After running the command above, you're able to
@@ -84,19 +72,11 @@ If you need to also clear the database run:
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Architecture Diagrams
+## System Architecture Overview
 
-### System Architecture
-
-<img src="docs/images/system-architecture.png" alt="System Architecture" width="500">
-
-### Web UI Architecture
-
-<img src="docs/images/sw-architecture-webui.png" alt="Web UI Architecture" width="500">
-
-### Assessment Metric Service Architecture
-
-<img src="docs/images/sw-architecture-be-service.png" width="500" alt="Assessment Metric Service Architecture">
+* Web UI (TypeScript, React)
+* Assessment Metric Service (TypeScript, NestJS, MongoDB)
+* Database (MongoDB)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -121,13 +101,16 @@ If you need to also clear the database run:
 ### Ideas for Future Development
 
 * Assessment hardening
-    - [ ] To prevent cheating we should consider to move a part of the Card Selection Game logic to the backend
 * Features
     - [ ] Add Multi-language Support
     - [ ] Consider adding the information if the correct card was selected. This would simplify data analysis for the python script.
-* Refactorings & Code Improvements
-    - [ ] Resolve all `TODO` comments
-    - [ ] Remove `any` where possible
+    - [ ] Add a user authentication mechanism
+    - [ ] Username validation e.g. prevention of forbidden characters '/'
+    - [ ] Implement proper logging and error handling
     - [ ] Add automated tests (e.g. unit tests, integration tests, e2e tests)
+* Refactorings & Code Improvements
+    - [ ] Remove all `TODO` comments
+    - [ ] Remove `any` where possible
+    - [ ] Rethink namings especially in the `assessment metric service`
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

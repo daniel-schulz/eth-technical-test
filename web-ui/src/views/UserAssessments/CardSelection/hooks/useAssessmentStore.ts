@@ -45,16 +45,22 @@ interface CardSelectionAssessmentState {
 const NUMBER_OF_ROUNDS = 10;
 
 const createRandomCard = (existingNumber?: number): Card => {
-  let number = getRandomNumber();
+  let number = getRandomNumber(1, 9);
 
   // We must ensure the new card has a different number if an existing number is provided
   while (number === existingNumber) {
-    number = getRandomNumber();
+    number = getRandomNumber(1, 9);
   }
+
+  const numberOfRandomLetters = getRandomNumber(1, 4);
+  const randomLetters = getRandomLetters(numberOfRandomLetters);
+
+  const position = getRandomNumber(0, randomLetters.length);
+  const displayText = randomLetters.slice(0, position) + number + randomLetters.slice(position);
 
   return {
     color: getRandomCardColor(),
-    displayText: `${number}${getRandomLetters()}`,
+    displayText: displayText,
   };
 };
 
@@ -129,7 +135,7 @@ export const useAssessmentStore = create<CardSelectionAssessmentState>((set, get
   },
 
   sendAssessmentMetrics: async (): Promise<void> => {
-    const state = useAssessmentStore.getState(); // Get the current state
+    const state = useAssessmentStore.getState();
     if (!state.userId) {
       throw new Error('Cannot send data without a user ID');
     }

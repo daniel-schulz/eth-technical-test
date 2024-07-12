@@ -8,18 +8,6 @@ import {AssessmentCompleted} from "../AssessmentCompleted";
 
 export function AssessmentGame() {
   const currentRound = useAssessmentStore((state) => state.currentRound);
-  const completeCurrentRound = useAssessmentStore((state) => state.completeCurrentRound);
-  const startNextRound = useAssessmentStore((state) => state.startNextRound);
-  const sendAssessmentMetrics = useAssessmentStore((state) => state.sendAssessmentMetrics);
-
-  function onCardClick(card: Card) {
-    completeCurrentRound(card);
-    const hasAnotherRound = startNextRound();
-    if (!hasAnotherRound) {
-      console.log('Last round completed');
-      sendAssessmentMetrics();
-    }
-  }
 
   if (!currentRound) {
     return (
@@ -28,7 +16,7 @@ export function AssessmentGame() {
   }
 
   const cardComponents = currentRound.cards.map((card, index) => {
-    return <CardComponent key={index} card={card} onClick={onCardClick}/>;
+    return <CardComponent key={index} card={card}/>;
   });
 
   return <div className="cardselection-assessmentgame">
