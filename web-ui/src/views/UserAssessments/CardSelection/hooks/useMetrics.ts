@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 
-export const useMetric = (userId: string) => {
+export const useAssessmentMetric = (userId: string) => {
   const [metric, setMetric] = useState<any>(null);
 
   useEffect(() => {

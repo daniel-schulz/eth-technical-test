@@ -3,3 +3,9 @@ export enum CardColors {
   GREEN = "green",
   YELLOW = "orange",
 }
+
+export function getRandomCardColor(): CardColors {
+  const colors = [CardColors.RED, CardColors.GREEN, CardColors.YELLOW];
+  return colors[Math.floor(Math.random() * colors.length)];
+};
+

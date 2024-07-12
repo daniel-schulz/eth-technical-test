@@ -1,9 +1,10 @@
-import { Module } from '@nestjs/common';
-import {ConfigModule } from "@nestjs/config";
+import {Module} from '@nestjs/common';
+import {ConfigModule} from "@nestjs/config";
 
-import { GenericMetricController } from './generic-metric/generic-metric.controller';
-import { GenericMetricService } from './generic-metric/generic-metric.service';
-import {DatabaseModule} from "./database/database.module";
+import {GenericMetricController} from './generic-metric/generic-metric.controller';
+import {GenericMetricService} from './generic-metric/generic-metric.service';
+import {IGenericMetricRepositoryAdapterSymbol} from "./repositories/generic-metric-repository.interface";
+import {GenericMetricRepositoryMongodbAdapter} from "./repositories/generic-metric-repository-mongodb.adapter";
 
 @Module({
   imports: [
@@ -11,9 +12,15 @@ import {DatabaseModule} from "./database/database.module";
       isGlobal: true,
       envFilePath: '.env',
     }),
-    DatabaseModule,
   ],
   controllers: [GenericMetricController],
-  providers: [GenericMetricService],
+  providers: [
+    GenericMetricService,
+    {
+      provide: IGenericMetricRepositoryAdapterSymbol,
+      useClass: GenericMetricRepositoryMongodbAdapter,
+    },
+  ],
 })
-export class AppModule {}
+export class AppModule {
+}

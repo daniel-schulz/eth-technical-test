@@ -1,32 +1,18 @@
-import {Injectable} from '@nestjs/common';
+import {Inject, Injectable} from '@nestjs/common';
 
-import {DatabaseService} from "../database/database.service";
 import {GenericAssessmentDoc} from "./generic-assessment";
+import {IGenericMetricRepository, IGenericMetricRepositoryAdapterSymbol} from "../repositories/generic-metric-repository.interface";
 
 @Injectable()
 export class GenericMetricService {
-  private collection: any;
-
-  constructor(private databaseService: DatabaseService) {
-  }
-
-  async onModuleInit() {
-    this.collection = this.databaseService.getCollection('generic-metrics');
+  constructor(@Inject(IGenericMetricRepositoryAdapterSymbol) private genericMetricRepository: IGenericMetricRepository<any>) {
   }
 
   async create(assessmentId: string, userId: string, metric: any): Promise<any> {
-    if (await this.findOne(assessmentId, userId)) {
-      throw new Error(`Metric with assessmentId ${assessmentId} and userId ${userId} already exists`);
-    }
-
-    return this.collection.insertOne({
-      assessmentId,
-      userId,
-      metric,
-    } as GenericAssessmentDoc);
+    return this.genericMetricRepository.create(assessmentId, userId, metric);
   }
 
   async findOne(assessmentId: string, userId: string): Promise<GenericAssessmentDoc | null> {
-    return this.collection.findOne({assessmentId: assessmentId, userId: userId});
+    return this.genericMetricRepository.find(assessmentId, userId);
   }
 }

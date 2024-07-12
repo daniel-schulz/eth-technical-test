@@ -64,6 +64,8 @@ Deploy the service to the docker environment:
    docker compose up --build --detach
    ```
 
+After running the command above, access the web UI in your browser via http://localhost:3000/CardSelection.
+
 ### Deinstallation
 
 Stop and remove the containers from your docker environment (without clearing the database):
@@ -97,7 +99,7 @@ TODO: Add architecture diagrams and explain the components
     - [x] Connect to database
     - [x] Containerize the service
 - [x] Add a __Web UI__ with a __card selection assessment__ (game)
-    - [ ] Game logic
+    - [x] Game logic
     - [x] UI components and design
     - [x] Containerize the UI
 - [x] Add back to top links

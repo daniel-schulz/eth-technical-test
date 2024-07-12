@@ -2,46 +2,58 @@ import create from 'zustand';
 
 import {AssessmentRound} from "../model/AssessmentRound";
 import {Card} from "../model/Card";
-import {CardColors} from "../model/CardColors";
+import {getRandomCardColor} from "../model/CardColors";
+import {getRandomLetters, getRandomNumber} from "../../../../utils/RandomGenerator";
+import {CardSelectionAssessmentMetric} from "../model/CardSelectionAssessmentMetric";
 
-interface AssessmentState {
+interface CardSelectionAssessmentState {
   userId: string | null;
   openRounds: AssessmentRound[];
   completedRounds: AssessmentRound[];
   currentRound: AssessmentRound | null;
-  startAssessment: (userId: string) => void;
+
+  /**
+   * Initializes the assessment by creating the rounds and setting the user ID.
+   * @param userId The user ID to associate with the assessment.
+   */
+  initializeAssessment: (userId: string) => void;
+
+  /**
+   * Starts the next round if there is one available.
+   * @returns {boolean} True if a round was started, false if there are no more rounds available.
+   */
   startNextRound: () => boolean;
+
+  /**
+   * Completes the current round by setting the selected card and calculating the user reaction time.
+   * @param selectedCard The card that the user selected.
+   */
   completeCurrentRound: (selectedCard: Card) => void;
-  sendAssessmentData: () => Promise<void>;
+
+  /**
+   * Checks if an assessment metric exists for the user in the backend service.
+   * @param userId The user ID to check for.
+   */
+  existsAssessmentMetric: (userId: string) => Promise<boolean>;
+
+  /**
+   * Sends the assessment metrics to the backend service.
+   */
+  sendAssessmentMetrics: () => Promise<void>;
 }
 
 const NUMBER_OF_ROUNDS = 10;
 
-const getRandomNumber = (): number => Math.floor(Math.random() * 9) + 1;
-
-const getRandomLetters = (): string => {
-  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-  const length = Math.floor(Math.random() * 4) + 1;
-  let result = '';
-  for (let i = 0; i < length; i++) {
-    result += letters.charAt(Math.floor(Math.random() * letters.length));
-  }
-  return result;
-};
-
-const getRandomColor = (): CardColors => {
-  const colors = [CardColors.RED, CardColors.GREEN, CardColors.YELLOW];
-  return colors[Math.floor(Math.random() * colors.length)];
-};
-
 const createRandomCard = (existingNumber?: number): Card => {
   let number = getRandomNumber();
-  // Ensure the new card has a different number if an existing number is provided
+
+  // We must ensure the new card has a different number if an existing number is provided
   while (number === existingNumber) {
     number = getRandomNumber();
   }
+
   return {
-    color: getRandomColor(),
+    color: getRandomCardColor(),
     displayText: `${number}${getRandomLetters()}`,
   };
 };
@@ -53,18 +65,18 @@ const createRandomRound = (): AssessmentRound => {
   return new AssessmentRound(cards);
 };
 
-export const useAssessmentStore = create<AssessmentState>((set, get) => ({
+export const useAssessmentStore = create<CardSelectionAssessmentState>((set, get) => ({
   userId: null,
   openRounds: [],
   completedRounds: [],
   currentRound: null,
-  startAssessment: (userId) => {
-    console.log('startAssessment');
+
+  initializeAssessment: (userId): void => {
     const rounds = Array.from({length: NUMBER_OF_ROUNDS}, createRandomRound);
-    console.log('rounds', rounds);
     set({userId, openRounds: rounds, completedRounds: [], currentRound: null});
   },
-  startNextRound: () => {
+
+  startNextRound: (): boolean => {
     const state = get();
     if (state.currentRound) {
       throw new Error('Cannot start next round when current round is not completed');
@@ -72,12 +84,14 @@ export const useAssessmentStore = create<AssessmentState>((set, get) => ({
     if (state.openRounds.length === 0) {
       return false;
     }
+
     const [nextRound, ...remainingRounds] = state.openRounds;
     nextRound.startDateTime = new Date();
-    set({ currentRound: nextRound, openRounds: remainingRounds });
+    set({currentRound: nextRound, openRounds: remainingRounds});
     return true;
   },
-  completeCurrentRound: (selectedCard) => {
+
+  completeCurrentRound: (selectedCard): void => {
     set((state) => {
       if (!state.currentRound) {
         throw new Error('Cannot complete round when there is no current round');
@@ -95,16 +109,36 @@ export const useAssessmentStore = create<AssessmentState>((set, get) => ({
       return {currentRound: null, completedRounds};
     });
   },
-  sendAssessmentData: async () => {
+
+  existsAssessmentMetric: async (userId): Promise<boolean> => {
+    try {
+      const url = new URL(window.location.href);
+      const apiEndpoint = `${url}/Data/${userId}`;
+      const response = await fetch(apiEndpoint);
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const assessmentMetric = await response.json();
+      const isAssessmentMetricAvailable = !!assessmentMetric;
+      return isAssessmentMetricAvailable;
+    } catch (error) {
+      return false;
+    }
+  },
+
+  sendAssessmentMetrics: async (): Promise<void> => {
     const state = useAssessmentStore.getState(); // Get the current state
     if (!state.userId) {
       throw new Error('Cannot send data without a user ID');
     }
-    const payload = {
-      userId: state.userId,
-      completedRounds: state.completedRounds,
-    };
+
     try {
+      const assessmentMetric = new CardSelectionAssessmentMetric(
+        state.userId,
+        state.completedRounds,
+      );
       const url = new URL(window.location.href);
       const apiEndpoint = `${url}/Data/${state.userId}`;
 
@@ -113,16 +147,15 @@ export const useAssessmentStore = create<AssessmentState>((set, get) => ({
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(assessmentMetric),
       });
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-      const data = await response.json();
-      console.log('Successfully sent assessment data:', data);
+      await response.json();
     } catch (error) {
       console.error('Failed to send assessment data:', error);
     }
   },
-}));
+} as CardSelectionAssessmentState));
 

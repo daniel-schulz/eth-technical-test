@@ -10,14 +10,14 @@ export function AssessmentGame() {
   const currentRound = useAssessmentStore((state) => state.currentRound);
   const completeCurrentRound = useAssessmentStore((state) => state.completeCurrentRound);
   const startNextRound = useAssessmentStore((state) => state.startNextRound);
-  const sendAssessmentData = useAssessmentStore((state) => state.sendAssessmentData);
+  const sendAssessmentMetrics = useAssessmentStore((state) => state.sendAssessmentMetrics);
 
   function onCardClick(card: Card) {
     completeCurrentRound(card);
     const hasAnotherRound = startNextRound();
     if (!hasAnotherRound) {
       console.log('Last round completed');
-      sendAssessmentData();
+      sendAssessmentMetrics();
     }
   }
 
