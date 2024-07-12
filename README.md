@@ -112,6 +112,7 @@ TODO: Add architecture diagrams and explain the components
     - [ ] To prevent cheating we should consider to move a part of the Card Selection Game logic to the backend
 * Features
     - [ ] Add Multi-language Support
+    - [ ] Consider adding the information if the correct card was selected. This would simplify data analysis for the python script.
 * Refactorings & Code Improvements
     - [ ] Resolve all `TODO` comments
     - [ ] Remove `any` where possible
