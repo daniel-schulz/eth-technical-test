@@ -16,8 +16,6 @@ services:
     build:
       context: assessment-metric-service
       dockerfile: Dockerfile
-    ports:
-      - "3001:3001"
     environment:
       - NODE_ENV=production
       - MONGO_URL=mongodb://mongo:27017/eth-metrics
