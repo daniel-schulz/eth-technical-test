@@ -86,7 +86,17 @@ If you need to also clear the database run:
 
 ## Architecture Diagrams
 
-TODO: Add architecture diagrams and explain the components
+### System Architecture
+
+<img src="docs/images/system-architecture.png" alt="System Architecture" width="500">
+
+### Web UI Architecture
+
+<img src="docs/images/sw-architecture-webui.png" alt="Web UI Architecture" width="500">
+
+### Assessment Metric Service Architecture
+
+<img src="docs/images/sw-architecture-be-service.png" width="500" alt="Assessment Metric Service Architecture">
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
