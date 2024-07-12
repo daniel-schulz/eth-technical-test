@@ -36,6 +36,7 @@ export function Introduction() {
       <p>In ten rounds you will see a pair of two cards. Please always select the card containing the highest number</p>
       <p>Enter your code or username and press "Start" to start your assessment:</p>
       <input
+        className="cardselection-introduction-useridentifierinput"
         type="text"
         value={userIdentifier}
         onChange={onUserIdentifierChange}
