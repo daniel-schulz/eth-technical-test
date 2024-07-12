@@ -8,20 +8,27 @@ export class GenericMetricController {
   constructor(private readonly genericMetricService: GenericMetricService) {
   }
 
-  @Get(":id")
-  async getMetricData(@Param('id') id: string) {
-    const metric = await this.genericMetricService.findOne(id);
+  @Get(":assessmentId/:userId")
+  async getMetricData(
+    @Param('assessmentId') assessmentId: string,
+    @Param('userId') userId: string,
+  ) {
+    const metric = await this.genericMetricService.findOne(assessmentId, userId);
     if (!metric) {
       throw new HttpException('Metric not found', HttpStatus.NOT_FOUND);
     }
     return metric;
   }
 
-  @Post(":id")
+  @Post(":assessmentId/:userId")
   @ApiBody({})
-  async setMetricData(@Param('id') id: string, @Body() metric: any) {
+  async setMetricData(
+    @Param('assessmentId') assessmentId: string,
+    @Param('userId') userId: string,
+    @Body() metric: any,
+  ) {
     try {
-      return await this.genericMetricService.create(id, metric)
+      return await this.genericMetricService.create(assessmentId, userId, metric)
     } catch (error) {
       // TODO: Implement proper error handling
       throw new HttpException(error.message, HttpStatus.CONFLICT);

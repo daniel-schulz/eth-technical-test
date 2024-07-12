@@ -6,8 +6,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-    .setTitle('Metric Persistence Service')
-    .setDescription('The Metric Persistence Service API allows to store and retrieve assessment metrics.')
+    .setTitle('Assessment Metric Service')
+    .setDescription('The Assessment Metric Service API allows to store and retrieve assessment metrics.')
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);

@@ -8,7 +8,7 @@ module.exports = function (app) {
         target: 'http://localhost:3001',
         changeOrigin: true,
         pathRewrite: {
-          '^/CardSelection/Data': '/generic-metrics',
+          '^/CardSelection/Data': '/generic-metrics/card-selection',
         },
       })
     );
@@ -19,7 +19,7 @@ module.exports = function (app) {
         target: 'http://localhost:3000',
         changeOrigin: true,
         pathRewrite: {
-          '^/CardSelection/Data': '/generic-metrics',
+          '^/CardSelection/Data': '/generic-metrics/card-selection',
         },
       })
     );

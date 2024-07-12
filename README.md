@@ -59,6 +59,7 @@ TODO: Write a project description
 ### Installation
 
 Deploy the service to the docker environment:
+
    ```sh
    docker compose up --build --detach
    ```
@@ -66,6 +67,7 @@ Deploy the service to the docker environment:
 ### Deinstallation
 
 Stop and remove the containers from your docker environment:
+
    ```sh
    docker compose down
    ```
@@ -98,7 +100,12 @@ TODO: Add architecture diagrams and explain the components
 
 ### Ideas for Future Development
 
-- [ ] To prevent cheating we should consider to move a part of the Card Selection Game logic to the backend
-- [ ] Add Multi-language Support
+* Assessment hardening
+    - [ ] To prevent cheating we should consider to move a part of the Card Selection Game logic to the backend
+* Features
+    - [ ] Add Multi-language Support
+* Improve code quality
+    - [ ] Remove `any` where possible
+    - [ ] Add automated tests (e.g. unit tests, integration tests, e2e tests)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

@@ -1,7 +1,7 @@
 import {Injectable} from '@nestjs/common';
-import {ObjectId} from "mongodb";
 
 import {DatabaseService} from "../database/database.service";
+import {GenericAssessmentDoc} from "./generic-assessment";
 
 @Injectable()
 export class GenericMetricService {
@@ -14,18 +14,19 @@ export class GenericMetricService {
     this.collection = this.databaseService.getCollection('generic-metrics');
   }
 
-  async create(id: string, metric: any) {
-    if (await this.findOne(id)) {
-      throw new Error(`Metric with externalId ${id} already exists`);
+  async create(assessmentId: string, userId: string, metric: any): Promise<any> {
+    if (await this.findOne(assessmentId, userId)) {
+      throw new Error(`Metric with assessmentId ${assessmentId} and userId ${userId} already exists`);
     }
 
     return this.collection.insertOne({
-      externalId: id,
-      ...metric,
-    });
+      assessmentId,
+      userId,
+      metric,
+    } as GenericAssessmentDoc);
   }
 
-  async findOne(id: string) {
-    return this.collection.findOne({externalId: id});
+  async findOne(assessmentId: string, userId: string): Promise<GenericAssessmentDoc | null> {
+    return this.collection.findOne({assessmentId: assessmentId, userId: userId});
   }
 }
