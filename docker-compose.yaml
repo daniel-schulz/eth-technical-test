@@ -1,5 +1,4 @@
-version: '3.8'
-
+name: eth-assessment-platform
 services:
   web-ui:
     build:
