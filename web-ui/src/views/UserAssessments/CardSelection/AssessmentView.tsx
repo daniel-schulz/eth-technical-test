@@ -1,24 +1,25 @@
 import React from 'react';
 
 import './AssessmentView.css';
-import {Introduction} from "./Introduction";
-import {AssessmentRoundComponent} from "./components/AssessmentRoundComponent";
+import { Introduction } from './Introduction';
+import { AssessmentGame } from './components/AssessmentGame';
+import { useAssessmentStore } from './hooks/useAssessmentStore';
 
 export function AssessmentView() {
-  const [isTestStarted, setIsTestStarted] = React.useState(false);
+  const userId = useAssessmentStore((state) => state.userId);
 
-  function onTestStart(userIdentifier: string) {
-    // TODO: Implement assessment service
-    // TODO: check if test was already done with the userIdentifier!
-    setIsTestStarted(true);
+  let subView: React.JSX.Element | null = null;
+  if (!userId) {
+    subView = <Introduction />;
+  } else {
+    subView = <AssessmentGame />;
   }
 
   return (
-    <div className="App">
+    <div className="app">
       <h1>Card Selection Assessment</h1>
       <div>
-        {!isTestStarted && (<Introduction onTestStart={onTestStart}/>)}
-        {isTestStarted && (<AssessmentRoundComponent/>)}
+        {subView}
       </div>
     </div>
   );

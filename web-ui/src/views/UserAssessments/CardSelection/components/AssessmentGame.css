@@ -1,9 +1,9 @@
-.cardselection-assessmentround {
+.cardselection-assessmentgame {
     width: 800px;
     margin: auto auto;
     display: flex;
 }
 
-.cardselection-assessmentround * {
+.cardselection-assessmentgame * {
     margin: 100px;
 }

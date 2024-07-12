@@ -1,26 +1,25 @@
 import React from 'react';
 
 import './CardComponent.css';
-
-export enum CardColors {
-  RED = "red",
-  GREEN = "green",
-  YELLOW = "orange",
-}
-
-type Card = {
-  color: CardColors;
-}
+import {Card} from "../model/Card";
 
 interface CardComponentProps {
-  data: Card;
+  card: Card;
+  onClick: (card: Card) => void;
 }
 
-export function CardComponent({data}: CardComponentProps) {
+export function CardComponent(props: CardComponentProps) {
+  function onClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    props.onClick(props.card);
+  }
 
   return (
-    <div className="cardselection-components-card" style={{backgroundColor: data.color}}>
-      <div>cv4xx</div>
+    <div
+      className="cardselection-components-cardcomponent"
+      style={{backgroundColor: props.card.color}}
+      onClick={(event) => onClick(event)}
+    >
+      <div>{props.card.displayText}</div>
     </div>
   );
 }

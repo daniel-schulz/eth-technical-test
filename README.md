@@ -66,10 +66,16 @@ Deploy the service to the docker environment:
 
 ### Deinstallation
 
-Stop and remove the containers from your docker environment:
+Stop and remove the containers from your docker environment (without clearing the database):
 
    ```sh
    docker compose down
+   ```
+
+If you need to also clear the database run:
+
+   ```sh
+   docker compose down --volumes
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -104,7 +110,8 @@ TODO: Add architecture diagrams and explain the components
     - [ ] To prevent cheating we should consider to move a part of the Card Selection Game logic to the backend
 * Features
     - [ ] Add Multi-language Support
-* Improve code quality
+* Refactorings & Code Improvements
+    - [ ] Resolve all `TODO` comments
     - [ ] Remove `any` where possible
     - [ ] Add automated tests (e.g. unit tests, integration tests, e2e tests)
 
