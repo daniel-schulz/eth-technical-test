@@ -10,9 +10,9 @@ services:
     networks:
       - app-network
     depends_on:
-      - metric-persistence-service
+      - assessment-metric-service
 
-  metric-persistence-service:
+  assessment-metric-service:
     build:
       context: assessment-metric-service
       dockerfile: Dockerfile
@@ -22,7 +22,7 @@ services:
       - NODE_ENV=production
       - MONGO_URL=mongodb://mongo:27017/eth-metrics
     volumes:
-      - ./metric-persistence-service:/app
+      - ./assessment-metric-service:/app
     networks:
       - app-network
     depends_on:
