@@ -64,7 +64,9 @@ Deploy the service to the docker environment:
    docker compose up --build --detach
    ```
 
-After running the command above, access the web UI in your browser via http://localhost:3000/CardSelection.
+After running the command above, you're able to
+* access the web UI in your browser via http://localhost:3000/CardSelection.
+* download the data for analysis via `http://localhost:3000/CardSelection/Data/<code>`.
 
 ### Deinstallation
 
