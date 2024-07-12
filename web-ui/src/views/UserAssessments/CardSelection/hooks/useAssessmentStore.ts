@@ -66,7 +66,8 @@ const createRandomCard = (existingNumber?: number): Card => {
 
 const createRandomRound = (): AssessmentRound => {
   const firstCard = createRandomCard();
-  const secondCard = createRandomCard(parseInt(firstCard.displayText[0], 10));
+  const numberInFirstCard = parseInt(firstCard.displayText.replace(/\D/g, ''), 10);
+  const secondCard = createRandomCard(numberInFirstCard);
   const cards = [firstCard, secondCard];
   return new AssessmentRound(cards);
 };

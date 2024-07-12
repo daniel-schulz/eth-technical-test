@@ -100,7 +100,8 @@ If you need to also clear the database run:
 
 ### Ideas for Future Development
 
-* Assessment hardening
+* Requirement Clarifications
+    - [ ] On the mockup screens there are cards with only a number and without letters. In the requirements is written `Each card is labelled with exactly one number (1-9), and between one and four letters, the order is random.`. I've sticked to the requirements. Is this correct?
 * Features
     - [ ] Add Multi-language Support
     - [ ] Consider adding the information if the correct card was selected. This would simplify data analysis for the python script.
