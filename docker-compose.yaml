@@ -14,8 +14,10 @@ services:
 
   metric-persistence-service:
     build:
-      context: ./metric-persistence-service
+      context: assessment-metric-service
       dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
     environment:
       - NODE_ENV=production
       - MONGO_URL=mongodb://mongo:27017/eth-metrics
