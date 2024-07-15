@@ -1,0 +1,10 @@
+.cardselection-introduction-errormessage {
+    color: red;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.cardselection-introduction-useridentifierinput {
+    width: 190px;
+    margin-right: 5px;
+}

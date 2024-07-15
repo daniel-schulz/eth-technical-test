@@ -1,0 +1,37 @@
+name: eth-assessment-platform
+services:
+  web-ui:
+    build:
+      context: ./web-ui
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    networks:
+      - app-network
+    depends_on:
+      - assessment-metric-service
+
+  assessment-metric-service:
+    build:
+      context: assessment-metric-service
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=production
+      - MONGO_URL=mongodb://mongo:27017/eth-metrics
+    networks:
+      - app-network
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:4.4
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - app-network
+
+networks:
+  app-network:
+
+volumes:
+  mongo_data:

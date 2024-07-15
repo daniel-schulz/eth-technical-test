@@ -1,22 +1,25 @@
 import React from 'react';
 
 import './AssessmentView.css';
-import {Introduction} from "./Introduction";
-import {AssessmentRoundComponent} from "./components/AssessmentRoundComponent";
+import { Introduction } from './Introduction';
+import { AssessmentGame } from './components/AssessmentGame';
+import { useAssessmentStore } from './hooks/useAssessmentStore';
 
 export function AssessmentView() {
-  const [isTestStarted, setIsTestStarted] = React.useState(false);
+  const userId = useAssessmentStore((state) => state.userId);
 
-  function onTestStart(userIdentifier: string) {
-    setIsTestStarted(true);
+  let subView: React.JSX.Element | null = null;
+  if (!userId) {
+    subView = <Introduction />;
+  } else {
+    subView = <AssessmentGame />;
   }
 
   return (
-    <div className="App">
-      <h1>Card Selection Test</h1>
+    <div className="app">
+      <h1>Card Selection Assessment</h1>
       <div>
-        {!isTestStarted && (<Introduction onTestStart={onTestStart}/>)}
-        {isTestStarted && (<AssessmentRoundComponent/>)}
+        {subView}
       </div>
     </div>
   );

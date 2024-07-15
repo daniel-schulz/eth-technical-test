@@ -5,7 +5,7 @@ import {Routes} from "../Routes";
 
 export function WelcomeView() {
   return (
-    <div className="App">
+    <div className="app">
       <h1>Welcome to the ETH assessment platform!</h1>
       <div>
         <p>Please choose an assessment to start:</p>

@@ -1,26 +1,34 @@
 import React from 'react';
 
 import './CardComponent.css';
-
-export enum CardColors {
-  RED = "red",
-  GREEN = "green",
-  YELLOW = "orange",
-}
-
-type Card = {
-  color: CardColors;
-}
+import {Card} from "../model/Card";
+import {useAssessmentStore} from "../hooks/useAssessmentStore";
 
 interface CardComponentProps {
-  data: Card;
+  card: Card;
 }
 
-export function CardComponent({data}: CardComponentProps) {
+export function CardComponent({card}: CardComponentProps) {
+  const completeCurrentRound = useAssessmentStore((state) => state.completeCurrentRound);
+  const startNextRound = useAssessmentStore((state) => state.startNextRound);
+  const sendAssessmentMetrics = useAssessmentStore((state) => state.sendAssessmentMetrics);
+
+  // TODO: Move to the store
+  function onClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    completeCurrentRound(card);
+    const hasAnotherRound = startNextRound();
+    if (!hasAnotherRound) {
+      sendAssessmentMetrics();
+    }
+  }
 
   return (
-    <div className="cardselection-components-card" style={{backgroundColor: data.color}}>
-      <div>cv4xx</div>
+    <div
+      className="cardselection-components-cardcomponent"
+      style={{backgroundColor: card.color}}
+      onClick={(event) => onClick(event)}
+    >
+      <div>{card.displayText}</div>
     </div>
   );
 }
