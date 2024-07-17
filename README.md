@@ -84,9 +84,8 @@ If you need to also clear the database run:
 ### System Architecture Overview
 
 The system consists of the following components:
-* Web UI (TypeScript, React)
+* Assessment Web UI (TypeScript, React)
 * Assessment Metric Service (TypeScript, NestJS, MongoDB)
-* Database (MongoDB)
 
 Each component is containerized and can be deployed with `docker-compose`.
 

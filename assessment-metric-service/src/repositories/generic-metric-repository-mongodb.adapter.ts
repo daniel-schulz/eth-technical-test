@@ -2,7 +2,7 @@ import {Injectable, OnModuleDestroy, OnModuleInit} from "@nestjs/common";
 import {IGenericMetricRepository} from "./generic-metric-repository.interface";
 import {Db, MongoClient} from "mongodb";
 import {ConfigService} from "@nestjs/config";
-import {GenericAssessmentDoc} from "../generic-metric/generic-assessment";
+import {GenericMetricDoc} from "../generic-metric/generic-metric-doc";
 
 @Injectable()
 export class GenericMetricRepositoryMongodbAdapter implements IGenericMetricRepository<any>, OnModuleInit, OnModuleDestroy {
@@ -45,7 +45,7 @@ export class GenericMetricRepositoryMongodbAdapter implements IGenericMetricRepo
       assessmentId,
       userId,
       metric,
-    } as GenericAssessmentDoc);
+    } as GenericMetricDoc);
   }
 
   async find(assessmentId: string, userId: string): Promise<any> {
