@@ -1,6 +1,6 @@
 import {Inject, Injectable} from '@nestjs/common';
 
-import {GenericAssessmentDoc} from "./generic-assessment";
+import {GenericMetricDoc} from "./generic-metric-doc";
 import {IGenericMetricRepository, IGenericMetricRepositoryAdapterSymbol} from "../repositories/generic-metric-repository.interface";
 
 @Injectable()
@@ -12,7 +12,7 @@ export class GenericMetricService {
     return this.genericMetricRepository.create(assessmentId, userId, metric);
   }
 
-  async findOne(assessmentId: string, userId: string): Promise<GenericAssessmentDoc | null> {
+  async findOne(assessmentId: string, userId: string): Promise<GenericMetricDoc | null> {
     return this.genericMetricRepository.find(assessmentId, userId);
   }
 }

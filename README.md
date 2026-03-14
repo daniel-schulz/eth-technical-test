@@ -28,7 +28,12 @@
         <li><a href="#deinstallation">Deinstallation</a></li>
       </ul>
     </li>
-    <li><a href="#system-architecture-overview">System Architecture Overview</a></li>
+    <li><a href="#rough-architecture-overview">Rough Architecture Overview</a>
+     <ul>
+       <li><a href="#system-architecture-overview">System Architecture Overview</a></li>
+       <li><a href="#card-selection-assessment-game">Card Selection Assessment Game</a></li>
+     </ul>
+</li>
     <li><a href="#roadmap">Roadmap</a></li>
   </ol>
 </details>
@@ -41,7 +46,8 @@
 
 ### Prerequisites
 
-To run deploy this application you need to have `docker` and `docker-compose` installed. For installation details see the [docker documentation](https://docs.docker.com/compose/install/).
+To run deploy this application you need to have `docker` and `docker-compose` installed. For installation details see
+the [docker documentation](https://docs.docker.com/compose/install/).
 
 ### Installation
 
@@ -53,6 +59,7 @@ docker compose up --build --detach
    ```
 
 After running the command above, you're able to
+
 * access the web UI in your browser via http://localhost:3000/CardSelection.
 * download the data for analysis via `http://localhost:3000/CardSelection/Data/<code>`.
 
@@ -72,15 +79,26 @@ If you need to also clear the database run:
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## System Architecture Overview
+## Rough Architecture Overview
 
-* Web UI (TypeScript, React)
+### System Architecture Overview
+
+The system consists of the following components:
+* Assessment Web UI (TypeScript, React)
 * Assessment Metric Service (TypeScript, NestJS, MongoDB)
-* Database (MongoDB)
+
+Each component is containerized and can be deployed with `docker-compose`.
+
+<img src="docs/images/system-architecture.svg" alt="Logo">
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+### Card Selection Assessment Game
 
+<img src="docs/images/card-selection-assessment_data-structure.svg">
+
+> __Note:__ The class `CardSelectionAssessmentMetric` could be simplified to `AssessmentMetric`. Also we could think about a stricter encapsulation. 
 
 <!-- ROADMAP -->
 
@@ -101,14 +119,18 @@ If you need to also clear the database run:
 ### Ideas for Future Development
 
 * Requirement Clarifications
-    - [ ] On the mockup screens there are cards with only a number and without letters. In the requirements is written `Each card is labelled with exactly one number (1-9), and between one and four letters, the order is random.`. I've sticked to the requirements. Is this correct?
+    - [ ] On the mockup screens there are cards with only a number and without letters. In the requirements is
+      written `Each card is labelled with exactly one number (1-9), and between one and four letters, the order is random.`.
+      I've sticked to the requirements. Is this correct?
 * Features
     - [ ] Add Multi-language Support
-    - [ ] Consider adding the information if the correct card was selected. This would simplify data analysis for the python script.
+    - [ ] Consider adding the information if the correct card was selected. This would simplify data analysis for the
+      python script.
     - [ ] Add a user authentication mechanism
     - [ ] Username validation e.g. prevention of forbidden characters '/'
     - [ ] Implement proper logging and error handling
     - [ ] Add automated tests (e.g. unit tests, integration tests, e2e tests)
+    - [ ] Add MonoRepo tools like `nx` or `lerna`
 * Refactorings & Code Improvements
     - [ ] Remove all `TODO` comments
     - [ ] Remove `any` where possible
